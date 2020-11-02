@@ -1,0 +1,195 @@
+
+    <p-tabView>
+      <p-tabPanel header="Single Mode Selection">
+        <!-- VIEW TABLE-->
+        <p-table [columns]="cols" [value]="users" selectionMode="single" [rowHover]="true" [(selection)]="selectedUser"
+          dataKey="id" [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15,20,25,30,35,40,45,50]"
+          (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" [paginator]="true">
+           <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th pSortableColumn="{{col.field}}" *ngFor="let col of columns">
+                        {{col.header}}
+                        <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                    </th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th *ngFor="let col of columns">
+                      <input pInputText type="text" (input)="dt.filter($event.target.value, 'col.field', 'startsWith')" placeholder="Filter by {{col.header}}" class="ui-column-filter">
+                    </th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData" style="text-align: center;">
+                    <td *ngFor="let col of columns">
+                        {{rowData[col.field]}}
+                    </td>
+                    <td>
+                      <button pButton type="button" (click)="viewUserDialog(rowData)" class="ui-button-primary" icon="pi pi-search"></button>
+                      <button pButton type="button" (click)="editUserDialog(rowData)" class="ui-button-primary" icon="pi pi-cog" style="margin-left: 2px;"></button>
+                      <button pButton type="button" (click)="deleteUser(rowData)" class="ui-button-danger" icon="pi pi-trash" style="margin-left: 2px;"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div style="text-align: left">
+                    Selected User: {{selectedUser ? selectedUser.username + ' - ' + selectedUser.firstname + ' - ' + selectedUser.lastname + ' - ' + selectedUser.email: 'none'}}
+                </div>
+            </ng-template>
+        </p-table>
+
+        <!-- DETAILS DIALOG-->
+        <p-dialog [(visible)]="display" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false">
+          <form [formGroup]="userform" *ngIf="display" (ngSubmit)="updateUser(userform.value)">
+          <p-header>
+            Update User Information
+          </p-header>
+          <div>
+            <!-- Edit Form Begins-->
+              <div class="card">
+                <!-- card start -->
+
+                <div class="card-header">
+                  <strong>User information</strong>
+                </div>
+
+                <div class="card-body">
+
+                      <div class="ui-g">
+                        <div class="ui-g-2">
+                          <label for="name">Gender</label>
+                        </div>
+                        <div class="ui-g-4">
+                            <p-radioButton formControlName="gender" name="radio" value="Female" label="Female"></p-radioButton>
+                            <p-radioButton formControlName="gender" name="radio" value="Male" label="Male"></p-radioButton>
+                        </div>
+                      </div>
+
+                      <div class="ui-g">
+                        <div class="ui-g-2">
+                          <label for="name">First Name</label>
+                        </div>
+                        <div class="ui-g-4">
+                          <input type="text" id="firstname"  class="form-control"  pInputText formControlName="firstname">
+                        </div>
+                      </div>
+
+                      <div class="ui-g">
+                        <div class="ui-g-2">
+                          <label for="name">Last Name</label>
+                        </div>
+                        <div class="ui-g-4">
+                          <input type="text" id="lastname" class="form-control"  pInputText formControlName="lastname">
+                        </div>
+                      </div>
+
+                      <div class="ui-g">
+                        <div class="ui-g-2">
+                          <label for="name">Email</label>
+                        </div>
+                        <div class="ui-g-4">
+                          <input type="text" id="email" class="form-control"  pInputText formControlName="email">
+                        </div>
+                      </div>
+
+                      <div class="ui-g">
+                        <div class="ui-g-2">
+                          <label for="name">Username</label>
+                        </div>
+                        <div class="ui-g-4">
+                          <input type="text" id="username" class="form-control"  pInputText formControlName="username">
+                        </div>
+                      </div>
+
+                      <div class="ui-g">
+                        <div class="ui-g-2">
+                          <label for="name">Password</label>
+                        </div>
+                        <div class="ui-g-4">
+                          <input type="password" class="form-control" id="password" formControlName="password" pPassword />
+                        </div>
+                      </div>
+
+                      <div class="ui-g">
+                        <div class="ui-g-2">
+                          <label for="select1">Country</label>
+                        </div>
+                        <div class="ui-g-4">
+                          <p-dropdown [options]="countries" name="country" formControlName="country" [style]="{'width':'100%'}"
+                          filter="true" >
+                            <ng-template let-country pTemplate="selectedItem">
+                              <span style="vertical-align:middle">{{country.label}}</span>
+                              <img src="assets/img/flags/{{country.icon}}" style="width:25px; margin-left:10px" />
+                            </ng-template>
+                            <ng-template let-country pTemplate="item">
+                              <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                <img src="assets/img/flags/{{country.icon}}" style="width:25px;position:absolute;top:1px;left:75px; border: 1rem #000" />
+                                <div style="font-size:14px;float:left;margin-top:4px">{{country.label}}</div>
+                              </div>
+                            </ng-template>
+                          </p-dropdown>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              <!-- Edit Form Ends-->
+          </div>
+          <p-footer>
+            <button pButton type="submit" label="SAVE" icon="pi pi-check" class="ui-button-rounded"></button>
+            <button pButton type="button" label="CANCEL" (click)="closeDialog()" icon="pi pi-times" class="ui-button-rounded"></button>
+          </p-footer>
+        </form>
+      </p-dialog>
+
+      </p-tabPanel>
+      <p-tabPanel header="Multi Mode Selection">
+        <p-table #dt [columns]="cols" [value]="users" selectionMode="multiple" [(selection)]="selectedUsers"
+          dataKey="id" styleClass="ui-table-customers" [rowHover]="true" [loading]="loading"
+          [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15,20,25,30,35,40,45,50]"
+          (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)"
+          [paginator]="true"
+          [filterDelay]="0">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th></th>
+                    <th pSortableColumn="{{col.field}}" *ngFor="let col of columns">
+                        {{col.header}}
+                        <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                    </th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th style="width: 3em">
+                      <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th *ngFor="let col of columns">
+                      <input pInputText type="text" (input)="dt.filter($event.target.value, 'col.field', 'startsWith')" placeholder="Filter by {{col.header}}" class="ui-column-filter">
+                    </th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                    <td>
+                        <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                    </td>
+                    <td *ngFor="let col of columns">
+                        {{rowData[col.field]}}
+                    </td>
+                    <td>
+                      <button pButton type="button" class="ui-button-secondary" icon="pi pi-cog"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <ul>
+                    <li *ngFor="let user of selectedUsers" style="text-align: left">
+                        {{user.gender + ' - ' + user.firstname + ' - ' + user.lastname + ' - ' + user.username+ ' - ' + user.email+ ' - ' + user.country}}
+                    </li>
+                </ul>
+            </ng-template>
+          </p-table>
+      </p-tabPanel>
+    </p-tabView>

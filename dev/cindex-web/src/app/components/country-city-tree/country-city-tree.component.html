@@ -1,0 +1,11 @@
+<p-tree
+  [value]="countryItems"
+  selectionMode="single"
+  (onNodeSelect)="nodeSelect($event)"
+  (onNodeExpand)="nodeExpand($event)"
+  [style]="{ 'max-height': '800px', overflow: 'auto', width: '100%' }">
+  <ng-template let-node pTemplate="default">
+    <span><img src="assets/img/flags/{{ node.data | lowercase }}.svg" style="width:17px; height:13px;"/></span>
+    <span style="margin-left: 3px;">{{node.label}}</span>
+  </ng-template>
+</p-tree>

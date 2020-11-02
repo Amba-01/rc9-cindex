@@ -1,0 +1,169 @@
+<p-fieldset legend="User information" [toggleable]="true">
+  <form [formGroup]="userform" (ngSubmit)="createUser(userform.value)">
+    <div class="card">
+        <div class="p-fluid">
+            <!-- Gender-->
+            <div class="p-field p-grid">
+                <label for="gender" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Gender</label>
+                <div class="p-formgroup-inline">
+                  <div class="p-field-checkbox">
+                    <p-radioButton
+                      formControlName="gender"
+                      name="radio"
+                      value="Female"
+                      label="Female"
+                    ></p-radioButton>
+                  </div>
+                  <div class="p-field-checkbox">
+                    <p-radioButton
+                      formControlName="gender"
+                      name="radio"
+                      value="Male"
+                      label="Male"
+                  ></p-radioButton>
+                  </div>
+              </div>
+            </div>
+            <!-- Firstname-->
+            <div class="p-field p-grid">
+                <label for="firstname" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Firstname</label>
+                <div class="p-col-12 p-md-10">
+                  <input
+                    type="text"
+                    id="firstname"
+                    class="form-control"
+                    pInputText
+                    formControlName="firstname"
+                  />
+                </div>
+            </div>
+            <!-- Lastname-->
+            <div class="p-field p-grid">
+                <label for="lastname" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Lastname</label>
+                <div class="p-col-12 p-md-10">
+                  <input
+                  type="text"
+                  id="lastname"
+                  class="form-control"
+                  pInputText
+                  formControlName="lastname"
+                />
+                </div>
+            </div>
+            <!-- Email-->
+            <div class="p-field p-grid">
+              <label for="email" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Email</label>
+              <div class="p-col-12 p-md-10">
+                <input
+                  type="text"
+                  id="email"
+                  class="form-control"
+                  pInputText
+                  formControlName="email"
+                />
+              </div>
+            </div>
+            <!-- Username-->
+            <div class="p-field p-grid">
+              <label for="username" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Username</label>
+              <div class="p-col-12 p-md-10">
+                <input
+                  type="text"
+                  id="username"
+                  class="form-control"
+                  pInputText
+                  formControlName="username"
+                />
+              </div>
+          </div>
+          <!--Password-->
+          <div class="p-field p-grid">
+            <label for="password" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Password</label>
+            <div class="p-col-12 p-md-10">
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                pPassword
+            />
+            </div>
+        </div>
+
+        <!--Password Cornfirmation-->
+        <div class="p-field p-grid">
+            <label for="confirm-password" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Confirm Password</label>
+            <div class="p-col-12 p-md-10">
+              <input
+                type="password"
+                class="form-control"
+                id="confirm-password"
+                formControlName="confirm-password"
+                pPassword
+              />
+            </div>
+        </div>
+
+        <!--Location-->
+        <div class="p-field p-grid">
+          <label for="country" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Country</label>
+          <div class="p-col-12 p-md-10">
+            <p-dropdown
+                  [options]="countryItems"
+                  name="country"
+                  formControlName="country"
+                  [(ngModel)]="selectedCountry"
+                  [style]="{ width: '100%' }"
+                  filter="true"
+                  placeholder="Select a Country"
+                >
+                  <ng-template let-country pTemplate="selectedItem">
+                    <img src="assets/img/flags/{{ country.icon | lowercase}}.svg" style="width: 25px;"/>
+                    <span style="vertical-align: left;margin-left: 5px">{{ country.label }}</span>
+                  </ng-template>
+                  <ng-template let-country pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative; height: 25px;">
+                      <img
+                        src="assets/img/flags/{{ country.icon | lowercase }}.svg"
+                        style="
+                          width: 25px;
+                          position: absolute;
+                          border: 1rem #000;
+                        "/>
+                      <div style="font-size: 14px; margin-left: 30px">
+                        {{ country.label }}
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <label for="confirm-password" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"></label>
+          <div class="p-col-12 p-md-10">
+            <div class="p-d-flex">
+              <div class="p-mr-2 p-order-3">
+                  <button
+                    pButton
+                    type="submit"
+                    label="Submit"
+                    class="p-mr-2 p-mb-2"
+                    [disabled]="loading$ | async">
+                  </button>
+              </div>
+              <div class="p-mr-2 p-order-1">
+                <button
+                  pButton
+                  type="button"
+                  label="Cancel"
+                  class="p-mr-2 p-mb-2"
+                  [disabled]="loading$ | async">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+  </form>
+</p-fieldset>

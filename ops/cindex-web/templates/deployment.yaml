@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cindex-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cindex-web
+  template:
+    metadata:
+      labels:
+        app: cindex-web
+    spec:
+      containers:
+        - name: cindex-web
+          image: invent360/cindex-web:1.0.0
+          ports:
+            - containerPort: 8080
+            - containerPort: 9443
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 250m
+              memory: 356Mi
+            limits:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+            - name: cindex-volume
+              mountPath: /usr/share/nginx/html/configs/prod
+      volumes:
+      - name: cindex-volume
+        configMap:
+          name: cindex-settings
