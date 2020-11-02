@@ -1,0 +1,19 @@
+[server]
+host = "127.0.0.1"
+port = "1323"
+
+[database]
+host = "localhost"
+port = "5432"
+username = "postgres"
+password = "password"
+name = "postgres"
+
+[messageQueue]
+address = "kafka"
+brokers = "127.0.0.1"
+port = "9092"
+topic = "invent360"
+verbose = true
+consumerGroup = "invent360-group"
+clientId = "invent360-client"
