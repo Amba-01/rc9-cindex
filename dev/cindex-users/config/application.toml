@@ -3,17 +3,17 @@ host = "127.0.0.1"
 port = "1323"
 
 [database]
-host = "localhost"
-port = "5432"
-username = "postgres"
+host = "127.0.0.1"
+port = "3306"
+username = "admin"
 password = "password"
-name = "postgres"
+name = "cindex_users_db"
 
 [messageQueue]
 address = "kafka"
 brokers = "127.0.0.1"
 port = "9092"
-topic = "invent360"
+topic = "afconect"
 verbose = true
-consumerGroup = "invent360-group"
-clientId = "invent360-client"
+consumerGroup = "afconect-group"
+clientId = "afconect-client"

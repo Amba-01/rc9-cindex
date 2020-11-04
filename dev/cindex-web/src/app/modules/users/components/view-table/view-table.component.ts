@@ -42,7 +42,10 @@ export class ViewTableComponent implements OnInit, OnChanges {
   selectedUsers: User[];
   cols: any[];
 
+  statuses: any[];
+
   display = false;
+
 
   constructor(
     private store: Store<UserState.State>,
@@ -94,6 +97,15 @@ export class ViewTableComponent implements OnInit, OnChanges {
       { label: "U.K", value: "U.K", icon: "gb.svg" },
       { label: "U.S.A", value: "U.S.A", icon: "us.svg" },
     ];
+
+    this.statuses = [
+      {label: 'Unqualified', value: 'unqualified'},
+      {label: 'Qualified', value: 'qualified'},
+      {label: 'New', value: 'new'},
+      {label: 'Negotiation', value: 'negotiation'},
+      {label: 'Renewal', value: 'renewal'},
+      {label: 'Proposal', value: 'proposal'}
+  ]
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -142,4 +154,11 @@ export class ViewTableComponent implements OnInit, OnChanges {
   deleteUser(user: User) {
     this.store.dispatch(UserActions.remove({ id: user.id }));
   }
+
+  onCountryChange(event) {
+    //this.table.filter(event.value, 'representative', 'in')
+}
+
+onActivityChange(event) {}
+
 }

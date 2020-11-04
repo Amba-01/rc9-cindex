@@ -8,7 +8,7 @@ import { environment } from "../environments/environment";
 import { EffectsModule } from "@ngrx/effects";
 import { AppEffects } from "./store/effects/app.effects";
 import { StoreRouterConnectingModule } from "@ngrx/router-store";
-import { reducers, metaReducers } from "./store/reducers";
+import { reducers, metaReducers } from "./store/reducers/app.reducer";
 
 import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
@@ -31,7 +31,6 @@ import { ButtonModule } from 'primeng/button';
     RoomsModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
-
       runtimeChecks: {
         strictStateImmutability: true,
         strictActionImmutability: true,
@@ -42,7 +41,7 @@ import { ButtonModule } from 'primeng/button';
     }),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({
-      name: "NgRx Book Store App",
+      name: "Cindex Web App",
       logOnly: environment.production
     }),
     EffectsModule.forRoot([AppEffects]),

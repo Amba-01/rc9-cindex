@@ -1,1 +1,2 @@
 <signup></signup>
+<view-table [users]="users$ | async" (userToEmit)="onUserEmitted($event)"></view-table>

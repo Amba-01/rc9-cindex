@@ -1,8 +1,6 @@
 package utils
 
 import (
-	"fmt"
-	"github.com/BurntSushi/toml"
 	"sync"
 )
 
@@ -26,9 +24,8 @@ type MutexConfigManager struct {
 	mutex *sync.Mutex
 }
 
-func NewMutexConfigManager(appConfigFile string) *MutexConfigManager {
-	config := loadConfig(appConfigFile)
-	cm = &MutexConfigManager{config, &sync.Mutex{}}
+func NewMutexConfigManager(conf *Config) *MutexConfigManager {
+	cm = &MutexConfigManager{conf, &sync.Mutex{}}
 	return cm
 }
 
@@ -53,11 +50,5 @@ func (m *MutexConfigManager) Close() {
 	//Do Nothing
 }
 
-func loadConfig(configFile string) *Config {
-	conf := &Config{}
-	if _, err := toml.DecodeFile(configFile, &conf); err != nil {
-		fmt.Println(err)
-	}
-	return conf
-}
+
 

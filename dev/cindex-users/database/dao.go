@@ -3,12 +3,11 @@ package database
 import (
 	"errors"
 	"fmt"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/rc9-cindex/dev/cindex-users/models"
 	"github.com/rc9-cindex/dev/cindex-users/utils"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 	"log"
-	"net/url"
 )
 
 var db *gorm.DB
@@ -19,14 +18,16 @@ type DAO struct {
 
 func NewDAO() *DAO {
 	var dbConfig = utils.GetConfigManager().Get().Database
-	dbUri := url.URL{
-		User:     url.UserPassword(dbConfig.Username, dbConfig.Password),
-		Scheme:   "postgres",
-		Host:     fmt.Sprintf("%s:%s", dbConfig.Host, dbConfig.Port),
-		Path:     dbConfig.Name,
-		RawQuery: (&url.Values{"sslmode": []string{"disable"}}).Encode(),
-	}
-	db, err := gorm.Open("postgres", dbUri.String())
+	dbUri:= fmt.Sprintf(
+		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		dbConfig.Username,
+		dbConfig.Password,
+		dbConfig.Host,
+		dbConfig.Port,
+		dbConfig.Name)
+
+	println("dbUri:", dbUri)
+	db, err := gorm.Open(mysql.Open(dbUri), &gorm.Config{})
 
 	if err != nil {
 		log.Fatalln(err)

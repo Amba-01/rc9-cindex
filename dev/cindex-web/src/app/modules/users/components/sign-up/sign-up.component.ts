@@ -39,7 +39,6 @@ export class SignUpComponent implements OnInit {
   loading$ = this.store.pipe(select(UserSelectors.getLoading));
 
   msgs: Message[] = [];
-  selectedCountry: string;
 
   countries: Country[] = [];
   countryItems: SelectItem[] = [];
@@ -82,7 +81,7 @@ export class SignUpComponent implements OnInit {
         this.countries.forEach((c) => {
           this.countryItems.push({
             label: c.name,
-            value: c.name,
+            value: c.code,
             icon: c.code
 
           });
@@ -92,6 +91,13 @@ export class SignUpComponent implements OnInit {
   }
 
   createUser(user: User) {
+    // const countryMap = new Map<string, string>(
+    //   this.countryItems.map(x => [x.label, x.value] as [string, string])
+    // );
+    // console.log(user.country)
+    // console.log(countryMap)
+    // console.log(countryMap.get(user.country))
+    // user.country = countryMap.get(user.country);
     this.store.dispatch(UserActions.addUser({ user }));
   }
 

@@ -45,7 +45,7 @@ func (b *UserRepository) UpdateUser(unitId string, UserDTO *models.User) (unit m
 	if err != nil {
 		return models.User{}, err
 	}
-	err = db.Model(&User).Update(UserDTO).Error
+	err = db.Model(&User).Updates(UserDTO).Error
 	if err != nil {
 		return models.User{}, err
 	}

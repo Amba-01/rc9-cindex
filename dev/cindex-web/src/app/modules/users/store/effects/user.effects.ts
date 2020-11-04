@@ -10,7 +10,7 @@ import {
 } from "rxjs/operators";
 
 import * as UserActions from "../actions/user.actions";
-import { UserService } from "../../service/user.service";
+import { UserService } from "../../services/user.service";
 
 @Injectable()
 export class UserEffects {

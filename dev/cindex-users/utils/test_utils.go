@@ -2,12 +2,14 @@ package utils
 
 import (
 	"github.com/google/uuid"
-	"github.com/inventory-mgt/models"
+	"github.com/rc9-cindex/dev/cindex-users/models"
 )
 
-func NewUserDTO() *models.ProductDTO {
-	return &models.ProductDTO{
-		Name:           "Terrifying - " + uuid.New().String(),
-		Price:          670.0,
+func NewUserDTO() *models.UserDTO {
+	return &models.UserDTO{
+		Username:           "Terrifying - " + uuid.New().String(),
+		Email:          "abay@gmail.com",
+		Password: uuid.New().String(),
+		Country:    "DE",
 	}
 }

@@ -8,7 +8,7 @@ import { map } from "rxjs/operators";
   providedIn: "root",
 })
 export class UserService {
-  SERVER_URL = "http://localhost:8080/boot/v1";
+  SERVER_URL = "http://localhost:1323";
 
   constructor(private http: HttpClient) {}
 
@@ -37,10 +37,12 @@ export class UserService {
    */
   fetchUsers(offset?: number, limit?: number): Observable<User[]> {
     const URL = `${this.SERVER_URL}/users`;
+    /*
     let params = new HttpParams();
     params = offset ? params.set("offset", `${offset}`) : params;
     params = limit ? params.set("limit", `${limit}`) : params;
-    return this.http.get<User[]>(URL, { params });
+    */
+    return this.http.get<User[]>(URL/*, { params }*/);
   }
 
   /**
