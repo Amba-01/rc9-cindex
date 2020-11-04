@@ -2,26 +2,48 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 import * as UserState from "../states/user.state";
 
 /**
- * Selectors
+ * SeletAll && SelectEntities
  */
-export const selectState = createFeatureSelector<UserState.State>(
-  UserState.userFeatureKey
-);
 const { selectAll, selectEntities } = UserState.adapter.getSelectors();
 
-export const getLoading = createSelector(selectState, (state) => state.loading);
+/**
+ * Get User State
+ */
+export const getUserState = createFeatureSelector<UserState.State>(
+  UserState.userFeatureKey
+);
 
-export const getError = createSelector(selectState, (state) => state.error);
+/**
+ * Get Loading
+ */
+export const getLoading = createSelector(getUserState, (state) => state.loading);
 
+/**
+ * Get Error
+ */
+export const getError = createSelector(getUserState, (state) => state.error);
+
+/**
+ * Get SelectedId
+ */
 export const getSelectedId = createSelector(
-  selectState,
+  getUserState,
   (state) => state.selectedId
 );
 
-export const getUsers = createSelector(selectState, selectAll);
+/**
+ * Get Users
+ */
+export const getUsers = createSelector(getUserState, selectAll);
 
-export const getUserEntities = createSelector(selectState, selectEntities);
+/**
+ * Get User Entities
+ */
+export const getUserEntities = createSelector(getUserState, selectEntities);
 
+/**
+ * Get User
+ */
 export const getUser = createSelector(
   getSelectedId,
   getUserEntities,
