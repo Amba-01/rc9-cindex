@@ -27,6 +27,7 @@
     "@ngrx/router-store": "^10.0.1",
     "@ngrx/store": "^10.0.1",
     "@ngrx/store-devtools": "^10.0.1",
+    "jasmine-marbles": "^0.6.0",
     "primeflex": "^2.0.0",
     "primeicons": "^4.0.0",
     "primeng": "^10.0.3",

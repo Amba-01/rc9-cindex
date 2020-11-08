@@ -4,7 +4,9 @@ import { User } from "../../models/user.model";
 /**
  * Create User Actions
  */
-export const addUser = createAction("[User] Add", props<{ user: User }>());
+export const addUser = createAction(
+  "[User] Add",
+ props<{ user: User }>());
 
 export const addUserSuccess = createAction(
   "[User] Add Success",
