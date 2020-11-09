@@ -1,8 +1,8 @@
 import * as UserActions from "../actions/user.actions";
-import { createReducer, on } from "@ngrx/store";
-import { adapter, initialState } from "../states/user.state";
+import { Action, createReducer, on } from "@ngrx/store";
+import { adapter, initialState, State } from "../states/user.state";
 
-export const reducer = createReducer(
+const userReducer = createReducer(
   initialState,
   /**
    * Create User Operations
@@ -85,3 +85,7 @@ export const reducer = createReducer(
     return { ...state, loading: false, error };
   })
 );
+
+export function reducer(state: State | undefined, action: Action) {
+  return userReducer(state, action);
+}

@@ -7,10 +7,8 @@ import {
   Output,
   EventEmitter,
 } from "@angular/core";
-import * as UserState from "../../store/states/user.state";
 import * as UserActions from "../../store/actions/user.actions";
 import { User } from "../../models/user.model";
-import { Store } from "@ngrx/store";
 import {
   FormBuilder,
   FormGroup,
@@ -19,6 +17,7 @@ import {
 } from "@angular/forms";
 import { SelectItem } from "primeng/api/selectitem";
 import { Message } from "primeng/api/message";
+import { Userfacade } from '../../facades/user.facade';
 
 @Component({
   selector: "view-table",
@@ -48,8 +47,8 @@ export class ViewTableComponent implements OnInit, OnChanges {
 
 
   constructor(
-    private store: Store<UserState.State>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private userFacade: Userfacade
   ) {}
 
   ngOnInit() {
@@ -147,12 +146,12 @@ export class ViewTableComponent implements OnInit, OnChanges {
 
   updateUser(user: User) {
     console.log("Final:|----->" + JSON.stringify(user));
-    this.store.dispatch(UserActions.update({ user }));
+    this.userFacade.dispatch(UserActions.update({ user }))
     this.display = false;
   }
 
   deleteUser(user: User) {
-    this.store.dispatch(UserActions.remove({ id: user.id }));
+    this.userFacade.dispatch(UserActions.remove({ id: user.id }));
   }
 
   onCountryChange(event) {

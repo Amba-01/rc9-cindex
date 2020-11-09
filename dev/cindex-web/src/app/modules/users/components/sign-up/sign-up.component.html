@@ -10,6 +10,7 @@
                     <p-radioButton
                       formControlName="gender"
                       name="radio"
+                      ngDefaultControl
                       value="Female"
                       label="Female"
                     ></p-radioButton>
@@ -18,6 +19,7 @@
                     <p-radioButton
                       formControlName="gender"
                       name="radio"
+                      ngDefaultControl
                       value="Male"
                       label="Male"
                   ></p-radioButton>
@@ -111,6 +113,7 @@
             <p-dropdown
                   [options]="countryItems"
                   name="country"
+                  ngDefaultControl
                   formControlName="country"
                   [style]="{ width: '100%' }"
                   filter="true"

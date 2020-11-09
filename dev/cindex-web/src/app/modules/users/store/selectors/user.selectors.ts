@@ -2,16 +2,40 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 import * as UserState from "../states/user.state";
 
 /**
- * SeletAll && SelectEntities
- */
-const { selectAll, selectEntities } = UserState.adapter.getSelectors();
-
-/**
  * Get User State
  */
 export const getUserState = createFeatureSelector<UserState.State>(
   UserState.userFeatureKey
 );
+
+
+const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal,
+} = UserState.adapter.getSelectors();
+
+/**
+ * Selet All
+ */
+//export const selectAll = createSelector(getUserState, (state) => (state?.ids as Array<string|number>)?.map(id => state?.entities[id]));
+
+/**
+ * Select Ids
+ */
+//export const selectIds = createSelector(getUserState, (state) => state?.ids);
+
+/**
+ * Get Total User Count
+ */
+//export const selectTotal = createSelector(getUserState, (state) => state?.ids?.length);
+
+/**
+ * Get User Entities
+ */
+//export const selectEntities = createSelector(getUserState, (state) => state?.entities);
+
 
 /**
  * Get Loading
@@ -36,16 +60,12 @@ export const getSelectedId = createSelector(
  */
 export const getUsers = createSelector(getUserState, selectAll);
 
-/**
- * Get User Entities
- */
-export const getUserEntities = createSelector(getUserState, selectEntities);
 
 /**
  * Get User
  */
 export const getUser = createSelector(
   getSelectedId,
-  getUserEntities,
+  selectEntities,
   (id, entities) => (id ? entities[id] : undefined)
 );

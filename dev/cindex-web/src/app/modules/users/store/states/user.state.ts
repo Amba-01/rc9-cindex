@@ -20,7 +20,7 @@ export interface State extends EntityState<User> {
 /**
  * Adapter
  */
-export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
+export const adapter: EntityAdapter<User>= createEntityAdapter<User>();
 
 /**
  * Initial state

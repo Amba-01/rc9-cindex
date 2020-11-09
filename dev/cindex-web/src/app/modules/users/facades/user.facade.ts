@@ -17,6 +17,10 @@ export class Userfacade {
     this.store.dispatch(action);
   }
 
+  get loading$(): Observable<any> {
+    return this.store.pipe(select(UserSelectors.getLoading));
+  }
+
   get users$(): Observable<User[]> {
     return this.store.pipe(select(UserSelectors.getUsers));
   }

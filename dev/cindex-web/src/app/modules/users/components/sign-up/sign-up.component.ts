@@ -23,6 +23,8 @@ import { SelectItem, Message } from "primeng/api";
 
 import { AppConfigManager } from "../../../../utils/app.config.manager"
 import { Country } from 'src/app/models/country.model';
+import { Userfacade } from '../../facades/user.facade';
+import { Observable } from 'rxjs';
 @Component({
   selector: "signup",
   templateUrl: "./sign-up.component.html",
@@ -36,7 +38,7 @@ export class SignUpComponent implements OnInit {
   /**
    * Loading Observable
    */
-  loading$ = this.store.pipe(select(UserSelectors.getLoading));
+  loading$: Observable<any>;
 
   msgs: Message[] = [];
 
@@ -47,10 +49,12 @@ export class SignUpComponent implements OnInit {
   genders: SelectItem[];
 
   constructor(
-    private store: Store<UserState.State>,
     private fb: FormBuilder,
-    private appConfigManager: AppConfigManager
-  ) {}
+    private appConfigManager: AppConfigManager,
+    private userFacade: Userfacade
+  ) {
+    this.loading$ = this.userFacade.loading$
+  }
 
   ngOnInit(): void {
     this.userform = this.fb.group({
@@ -98,7 +102,7 @@ export class SignUpComponent implements OnInit {
     // console.log(countryMap)
     // console.log(countryMap.get(user.country))
     // user.country = countryMap.get(user.country);
-    this.store.dispatch(UserActions.addUser({ user }));
+    this.userFacade.dispatch(UserActions.addUser({ user }))
   }
 
   show() {

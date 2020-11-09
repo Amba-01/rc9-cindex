@@ -48,10 +48,11 @@ export class DashboardComponent implements OnInit {
       () => console.log("---$$$$$----->1" + JSON.stringify(this.cities))
     );
   }
+  /**
   public onUserEmitted(user: User) {
     console.log("From Parent|-------->" + JSON.stringify(user));
     this.selectedUser = user;
-  }
+  } */
 
   public onUserReset(resetUser: boolean) {
     console.log("Reseting user:|-------->" + JSON.stringify(resetUser));

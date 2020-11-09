@@ -1,8 +1,8 @@
-import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { User } from '../models/user.model';
 import { UserService } from './user.service';
-import { HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 describe('UserService', () => {
 
@@ -11,7 +11,8 @@ describe('UserService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule]
+      providers: [UserService],
+      imports: [HttpClientTestingModule]
   });
 
    service = TestBed.inject(UserService);
@@ -24,34 +25,6 @@ describe('UserService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
-  });
-
-  it('should be created', () => {
-    const dummyUsers: User[] = [
-      {
-        id: '1',
-        gender: 'Female',
-        firstname: 'Janie',
-        lastname: 'Laria',
-        username: 'jlaria',
-        email: 'jlaria@gmail.com',
-        country: 'uk'
-      },
-      {
-        id: '2',
-        gender: 'Male',
-        firstname: 'Jack',
-        lastname: 'Laria',
-        username: 'jlaria',
-        email: 'jlaria@gmail.com',
-        country: 'uk'
-      }
-    ]
-
-    service.fetchUsers().subscribe(users => {
-      expect(users.length).toBe(2);
-      expect(users).toEqual(dummyUsers)
-    })
   });
 
   it('createUser should send a POST request and return the newly created user', (done) => {
@@ -74,7 +47,7 @@ describe('UserService', () => {
       (error) => { fail(error.message) }
     );
 
-    let req = httpMock.expectOne('https://jsonplaceholder.typicode.com/todos');
+    let req = httpMock.expectOne('http://localhost:1323/users');
     expect(req.request.method).toBe('POST');
     req.flush(newUser);
   });
@@ -99,12 +72,12 @@ describe('UserService', () => {
         (error) => { fail(error.message) }
       );
 
-      const testRequest = httpMock.expectOne('https://jsonplaceholder.typicode.com/todos/1');
+      const testRequest = httpMock.expectOne('http://localhost:1323/users/1');
       expect(testRequest.request.method).toBe('GET');
       testRequest.flush(existingUser);
 
     });
-
+/**
     //Outcome: Failure
     it('getSingleUser should throw an error if 3 request attempts fail', (done) => {
       let id: string = "1";
@@ -118,10 +91,10 @@ describe('UserService', () => {
       const retryCount = 3;
       for (let i = 0; i <= retryCount; i++) {
         httpMock
-          .expectOne({url: 'https://jsonplaceholder.typicode.com/todos/1', method: 'GET'})
+          .expectOne({url: 'http://localhost:1323/users/1', method: 'GET'})
           .flush({}, { status: 404, statusText: errMessage });
       }
-    });
+    }); */
   })
 
   /**
@@ -154,18 +127,19 @@ describe('UserService', () => {
         (data: User[]) => {
           expect(data).toBeDefined();
           expect(Array.isArray(data)).toBe(true);
-          expect(data.length).toBe(1);
+          expect(data.length).toBe(2);
           done();
         },
         (error: HttpErrorResponse) => { fail('The request was supposed to return data') }
       );
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/todos');
+      const req = httpMock.expectOne('http://localhost:1323/users');
       expect(req.request.method).toBe('GET');
       req.flush(users);
     });
 
     //Outcome: Failure
+    /*
     it('should return an empty array if an Interal Server Error occurs', (done) => {
       service.fetchUsers().subscribe(
         (data: User[]) => {
@@ -177,16 +151,16 @@ describe('UserService', () => {
         (error: HttpErrorResponse) => { fail('The request was supposed to return an empty array') }
       );
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/todos');
+      const req = httpMock.expectOne('http://localhost:1323/users');
       expect(req.request.method).toBe('GET');
       req.flush({}, { status: 500, statusText: 'Internal Server Error' });
 
-    })
+    })*/
   });
 
   /**
    * Update User
-   */
+
   describe('updateUser', () => {
     let logErrorSpy: jasmine.Spy;
 
@@ -216,10 +190,10 @@ describe('UserService', () => {
 
       );
 
-      const req = httpMock.expectOne('https://jsonplaceholder.typicode.com/todos/1');
+      const req = httpMock.expectOne('http://localhost:1323/users/1');
       expect(req.request.method).toBe('PUT');
       req.flush(null, { status: 401, statusText: 'Unauthorized request'});
 
     });
-  })
+  })*/
 });
