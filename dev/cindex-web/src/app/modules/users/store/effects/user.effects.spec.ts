@@ -26,7 +26,7 @@ describe('UserEffects', () => {
             'fetchUser',
             'fetchUsers',
             'updateUser',
-            'removeUser',
+            'deleteUser',
           ]),
         },
       ],
@@ -48,15 +48,7 @@ describe('UserEffects', () => {
       // Outcome: Success
     it('should return addSuccess', () => {
 
-        const user: User = {
-          id: '1',
-          gender: 'Female',
-          firstname: 'Janie',
-          lastname: 'Laria',
-          username: 'jlaria',
-          email: 'jlaria@gmail.com',
-          country: 'uk'
-        };
+        let user: User = generateUser("1", "Jamsy");
 
         const action = UserActions.addUser({ user });
         const completion = UserActions.addUserSuccess({ user });
@@ -77,26 +69,11 @@ describe('UserEffects', () => {
   describe('loadUsers$', () => {
       // Outcome: Success
       it('should return loadUsersSuccess', () => {
-        const users: User[] = [
-          {
-            id: '1',
-            gender: 'Female',
-            firstname: 'Janie',
-            lastname: 'Laria',
-            username: 'jlaria',
-            email: 'jlaria@gmail.com',
-            country: 'uk'
-          },
-          {
-            id: '2',
-            gender: 'Male',
-            firstname: 'Jack',
-            lastname: 'Laria',
-            username: 'jlaria',
-            email: 'jlaria@gmail.com',
-            country: 'uk'
-          }
-        ];
+
+        let user1: User = generateUser("1", "Jamsy");
+        let user2: User = generateUser("2", "Jack");
+
+        const users: User[] = [user1, user2];
 
         const response = cold('-a|', { a: users });
         service.fetchUsers = () => response;
@@ -138,15 +115,8 @@ describe('UserEffects', () => {
   describe('loadUser$', () => {
     // Outcome: Success
     it('should return loadUserSuccess', () => {
-      const user: User = {
-        id: '1',
-        gender: 'Female',
-        firstname: 'Janie',
-        lastname: 'Laria',
-        username: 'jlaria',
-        email: 'jlaria@gmail.com',
-        country: 'uk'
-      };
+
+      let user: User = generateUser("1", "Jamsy");
 
       const response = cold('-b', { b: user });
       service.fetchUser = () => response;
@@ -183,15 +153,9 @@ describe('UserEffects', () => {
   describe('update$', () => {
     // Outcome: Success
     it('should return updateUserSuccess', () => {
-      const user: User = {
-        id: '1',
-        gender: 'Female',
-        firstname: 'Janie',
-        lastname: 'Laria',
-        username: 'jlaria',
-        email: 'jlaria@gmail.com',
-        country: 'uk'
-      };
+
+      let user: User = generateUser("1", "Jamsy");
+
       const response = cold('-b', { b: user });
       service.updateUser = () => response;
 
@@ -209,15 +173,8 @@ describe('UserEffects', () => {
       const response = cold('-#', {}, error);
       service.updateUser = () => response;
 
-      const user: User = {
-        id: '1',
-        gender: 'Female',
-        firstname: 'Janie',
-        lastname: 'Laria',
-        username: 'jlaria',
-        email: 'jlaria@gmail.com',
-        country: 'uk'
-      };
+      let user: User = generateUser("1", "Jamsy");
+
       const action = UserActions.update({ user });
       const completion = UserActions.updateFailure({ error });
       const expected = cold('--c', { c: completion });
@@ -235,7 +192,7 @@ describe('UserEffects', () => {
     it('should return removeSuccess', () => {
       const id = '1';
       const response = cold('-b', { b: id });
-      service.removeUser = () => response;
+      service.deleteUser = () => response;
 
       const action = UserActions.remove({ id });
       const completion = UserActions.removeSuccess({ id });
@@ -249,7 +206,7 @@ describe('UserEffects', () => {
     it('should return removeFailure', () => {
       const error = 'error';
       const response = cold('-#', {}, error);
-      service.removeUser = () => response;
+      service.deleteUser = () => response;
 
       const id = '1';
       const action = UserActions.remove({ id });
@@ -262,3 +219,16 @@ describe('UserEffects', () => {
   });
 
 });
+
+function generateUser(userId: string, name: string): User {
+  const user: User = {
+    id: userId,
+    gender: 'Female',
+    firstname: 'Janie',
+    lastname: 'Laria',
+    username: name,
+    email: name+'@gmail.com',
+    country: 'uk'
+  }
+  return user
+}

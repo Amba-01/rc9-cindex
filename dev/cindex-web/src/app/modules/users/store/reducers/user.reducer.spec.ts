@@ -34,26 +34,12 @@ describe('UserActions', () => {
  * When a "[User] Load All Success" action is triggered, expected State should have loading = true
  */
   it('should handle loadAllSuccess Action', () => {
-    const users: User[] = [
-      {
-        id: '1',
-        gender: 'Female',
-        firstname: 'Janie',
-        lastname: 'Laria',
-        username: 'jlaria',
-        email: 'jlaria@gmail.com',
-        country: 'uk'
-      },
-      {
-        id: '2',
-        gender: 'Male',
-        firstname: 'James',
-        lastname: 'Matthis',
-        username: 'jmathis',
-        email: 'jmatthis@gmail.com',
-        country: 'de'
-      }
-    ];
+
+    let user1: User = generateUser("1", "Jamsy");
+    let user2: User = generateUser("2", "Jack");
+
+    const users: User[] = [user1, user2];
+
     const state: State = {
       ...initialState,
       loading: true
@@ -115,15 +101,8 @@ it('should handle load', () => {
  * When a "[User] Load Success
  */
 it('should handle loadSuccess', () => {
-  const user: User =   {
-    id: '1',
-    gender: 'Female',
-    firstname: 'Janie',
-    lastname: 'Laria',
-    username: 'jlaria',
-    email: 'jlaria@gmail.com',
-    country: 'uk'
-  };
+
+let user: User = generateUser("1", "Jamsy");
 
   const state: State = {
     ...initialState,
@@ -164,15 +143,8 @@ it('should handle loadFailure', () => {
  * When a "[User] Add
  */
 it('should handle add', () => {
-  const user: User = {
-    id: '1',
-    gender: 'Female',
-    firstname: 'Janie',
-    lastname: 'Laria',
-    username: 'jlaria',
-    email: 'jlaria@gmail.com',
-    country: 'uk'
-  };
+
+  let user: User = generateUser("1", "Jamsy");
 
   const state: State = {
     ...initialState,
@@ -190,15 +162,9 @@ it('should handle add', () => {
  * When a "[User] Add Success
  */
 it('should handle AddSuccess', () => {
-  const user: User = {
-    id: '1',
-    gender: 'Female',
-    firstname: 'Janie',
-    lastname: 'Laria',
-    username: 'jlaria',
-    email: 'jlaria@gmail.com',
-    country: 'uk'
-  };
+
+  let user: User = generateUser("1", "Jamsy");
+
   const state: State = {
     ...initialState,
     loading: true,
@@ -235,28 +201,11 @@ it('should handle addFailure', () => {
  * When a "[User] update
  */
 it('should handle update', () => {
-  const user: User = {
-    id: '1',
-    gender: 'Female',
-    firstname: 'Janie',
-    lastname: 'Laria',
-    username: 'jlaria',
-    email: 'jlaria@gmail.com',
-    country: 'uk'
-  };
 
-  const state: State = adapter.addOne(
-    {
-      id: '1',
-      gender: 'Female',
-      firstname: 'Jamminy',
-      lastname: 'Laria',
-      username: 'jlaria',
-      email: 'jlaria@gmail.com',
-      country: 'uk'
-    },
-    { ...initialState }
-  );
+  let user: User = generateUser("1", "Jamsy");
+  let updatedUser: User = generateUser("1", "Jack");
+
+  const state: State = adapter.addOne( updatedUser, { ...initialState });
 
   const expected: State = {
     ...state,
@@ -270,28 +219,10 @@ it('should handle update', () => {
  * When a "[User] updateSuccess
  */
 it('should handle updateSuccess', () => {
-  const user: User = {
-      id: '1',
-      gender: 'Female',
-      firstname: 'Janie',
-      lastname: 'Laria',
-      username: 'jlaria',
-      email: 'jlaria@gmail.com',
-      country: 'uk'
-  };
+  let user: User = generateUser("1", "Jamsy");
+  let updatedUser: User = generateUser("1", "Jack");
 
-  const state: State = adapter.addOne(
-    {
-      id: '1',
-      gender: 'Female',
-      firstname: 'Jamminy',
-      lastname: 'Laria',
-      username: 'jlaria',
-      email: 'jlaria@gmail.com',
-      country: 'uk'
-    },
-    { ...initialState, loading: true }
-  );
+  const state: State = adapter.addOne(updatedUser, { ...initialState, loading: true });
 
   const expected: State = adapter.updateOne(
     { id: user.id, changes: user },
@@ -328,26 +259,11 @@ it('should handle updateFailure', () => {
  */
 it('should handle remove', () => {
   const id = '2';
-  const users: User[] = [
-      {
-        id: '1',
-        gender: 'Female',
-        firstname: 'Janie',
-        lastname: 'Laria',
-        username: 'jlaria',
-        email: 'jlaria@gmail.com',
-        country: 'uk'
-      },
-      {
-        id: '2',
-        gender: 'Male',
-        firstname: 'James',
-        lastname: 'Matthis',
-        username: 'jmathis',
-        email: 'jmatthis@gmail.com',
-        country: 'de'
-      }
-  ];
+
+  let user1: User = generateUser("1", "Jamsy");
+  let user2: User = generateUser("2", "Jack");
+
+  const users: User[] = [user1, user2];
 
   const state: State = adapter.setAll(users, { ...initialState });
 
@@ -365,26 +281,11 @@ it('should handle remove', () => {
  */
 it('should handle removeSuccess', () => {
   const id = '2';
-  const users: User[] = [
-    {
-      id: '1',
-      gender: 'Female',
-      firstname: 'Janie',
-      lastname: 'Laria',
-      username: 'jlaria',
-      email: 'jlaria@gmail.com',
-      country: 'uk'
-    },
-    {
-      id: '2',
-      gender: 'Male',
-      firstname: 'James',
-      lastname: 'Matthis',
-      username: 'jmathis',
-      email: 'jmatthis@gmail.com',
-      country: 'de'
-    }
-  ];
+
+  let user1: User = generateUser("1", "Jamsy");
+  let user2: User = generateUser("2", "Jack");
+
+  const users: User[] = [user1, user2];
 
   const state: State = adapter.setAll(users, {
     ...initialState,
@@ -400,26 +301,12 @@ it('should handle removeSuccess', () => {
  * When a "[User] removeFailure
  */
 it('should handle removeFailure', () => {
-  const users: User[] = [
-    {
-      id: '1',
-      gender: 'Female',
-      firstname: 'Janie',
-      lastname: 'Laria',
-      username: 'jlaria',
-      email: 'jlaria@gmail.com',
-      country: 'uk'
-    },
-    {
-      id: '2',
-      gender: 'Male',
-      firstname: 'James',
-      lastname: 'Matthis',
-      username: 'jmathis',
-      email: 'jmatthis@gmail.com',
-      country: 'de'
-    }
-  ];
+
+  let user1: User = generateUser("1", "Jamsy");
+  let user2: User = generateUser("2", "Jack");
+
+  const users: User[] = [user1, user2];
+
   const error = 'error';
   const state: State = adapter.setAll(users, {
     ...initialState,
@@ -436,4 +323,15 @@ it('should handle removeFailure', () => {
 
 })
 
-
+function generateUser(userId: string, name: string): User {
+  const user: User = {
+    id: userId,
+    gender: 'Female',
+    firstname: 'Janie',
+    lastname: 'Laria',
+    username: name,
+    email: name+'@gmail.com',
+    country: 'uk'
+  }
+  return user
+}

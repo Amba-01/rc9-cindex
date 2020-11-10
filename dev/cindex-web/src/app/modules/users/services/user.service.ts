@@ -58,12 +58,8 @@ export class UserService {
    * Remove User
    * @param id ID
    */
-  removeUser(id: string) {
+  deleteUser(id: string) {
     const URL = `${this.SERVER_URL}/users/${id}`;
     return this.http.delete<void>(URL).pipe(map(() => id));
-  }
-
-  logError(message: string) {
-    console.log(message);
   }
 }

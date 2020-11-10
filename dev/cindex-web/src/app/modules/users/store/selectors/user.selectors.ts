@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { User } from '../../models/user.model';
 import * as UserState from "../states/user.state";
 
 /**
@@ -9,32 +10,25 @@ export const getUserState = createFeatureSelector<UserState.State>(
 );
 
 
-const {
-  selectIds,
-  selectEntities,
-  selectAll,
-  selectTotal,
-} = UserState.adapter.getSelectors();
-
 /**
  * Selet All
  */
-//export const selectAll = createSelector(getUserState, (state) => (state?.ids as Array<string|number>)?.map(id => state?.entities[id]));
+export const getAllUsers = createSelector(getUserState, (state) => (state?.ids as Array<string|number>)?.map(id => state?.entities[id]));
 
 /**
  * Select Ids
  */
-//export const selectIds = createSelector(getUserState, (state) => state?.ids);
+export const getUserIds = createSelector(getUserState, (state) => state?.ids);
 
 /**
  * Get Total User Count
  */
-//export const selectTotal = createSelector(getUserState, (state) => state?.ids?.length);
+export const getTotalUsers = createSelector(getUserState, (state) => state?.ids?.length);
 
 /**
  * Get User Entities
  */
-//export const selectEntities = createSelector(getUserState, (state) => state?.entities);
+export const getUserEntities = createSelector(getUserState, (state) => state?.entities);
 
 
 /**
@@ -45,27 +39,36 @@ export const getLoading = createSelector(getUserState, (state) => state.loading)
 /**
  * Get Error
  */
-export const getError = createSelector(getUserState, (state) => state.error);
+export const getUserError = createSelector(getUserState, (state) => state.error);
 
 /**
  * Get SelectedId
  */
-export const getSelectedId = createSelector(
+export const getId = createSelector(
   getUserState,
   (state) => state.selectedId
 );
-
-/**
- * Get Users
- */
-export const getUsers = createSelector(getUserState, selectAll);
 
 
 /**
  * Get User
  */
 export const getUser = createSelector(
-  getSelectedId,
-  selectEntities,
+  getId,
+  getUserEntities,
   (id, entities) => (id ? entities[id] : undefined)
 );
+
+/**
+ * Get Users
+ */
+
+export const getUsers = createSelector(getUserState, (state) => {
+  let users = [];
+  for (const [key, value] of Object.entries((state?.ids as Array<string|number>)?.map(id => state?.entities[id]))) {
+    users.push(value)
+  }
+  return users;
+})
+
+//export const getUsers = createSelector(getUserState, getAllUsers);

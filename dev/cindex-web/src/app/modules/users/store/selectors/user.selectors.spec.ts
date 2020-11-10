@@ -10,26 +10,10 @@ describe('UserSelectors', () => {
       [userFeatureKey]: State;
     }
 
-    const users: User[] = [
-      {
-        id: '1',
-        gender: 'Female',
-        firstname: 'Janie',
-        lastname: 'Laria',
-        username: 'jlaria',
-        email: 'jlaria@gmail.com',
-        country: 'uk'
-      },
-      {
-        id: '2',
-        gender: 'Male',
-        firstname: 'James',
-        lastname: 'Matthis',
-        username: 'jmathis',
-        email: 'jmatthis@gmail.com',
-        country: 'de'
-      }
-    ];
+    let user1: User = generateUser("1", "Jamsy");
+    let user2: User = generateUser("2", "Jack");
+
+    const users: User[] = [user1, user2];
 
     const state: UserState = {
       [userFeatureKey]: adapter.setAll(users, {
@@ -39,10 +23,26 @@ describe('UserSelectors', () => {
       }),
     };
 
+    expect(UserSelectors.getUserEntities(state)).toEqual(state.user.entities);
+    expect(UserSelectors.getUserIds(state)).toEqual(['1', '2']);
+    expect(UserSelectors.getTotalUsers(state)).toEqual(2);
     expect(UserSelectors.getLoading(state)).toEqual(state.user.loading);
-    expect(UserSelectors.getError(state)).toEqual(state.user.error);
-    expect(UserSelectors.getSelectedId(state)).toEqual(state.user.selectedId);
-    // expect(UserSelectors.getUser(state)).toEqual(users[0]);
-    //expect(UserSelectors.getUsers(state)).toEqual(users);
+    expect(UserSelectors.getUserError(state)).toEqual(state.user.error);
+    expect(UserSelectors.getId(state)).toEqual(state.user.selectedId);
+    expect(UserSelectors.getUser(state)).toEqual(users[0]);
+    expect(UserSelectors.getUsers(state)).toEqual(users);
   });
 });
+
+function generateUser(userId: string, name: string): User {
+  const user: User = {
+    id: userId,
+    gender: 'Female',
+    firstname: 'Janie',
+    lastname: 'Laria',
+    username: name,
+    email: name+'@gmail.com',
+    country: 'uk'
+  }
+  return user
+}

@@ -81,7 +81,7 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(UserActions.remove),
       concatMap((action) =>
-        this.userService.removeUser(action.id).pipe(
+        this.userService.deleteUser(action.id).pipe(
           map((result) => UserActions.removeSuccess({ id: result })),
           catchError((error) => of(UserActions.removeFailure({ error })))
         )
