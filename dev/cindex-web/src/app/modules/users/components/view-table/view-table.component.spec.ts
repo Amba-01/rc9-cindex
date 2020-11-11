@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
-import { Userfacade } from '../../facades/user.facade';
+import { UserFacade } from '../../facades/user.facade';
 
 import { ViewTableComponent } from './view-table.component';
 
@@ -17,7 +17,7 @@ describe('ViewTableComponent', () => {
         FormsModule,
       ],
       declarations: [ ViewTableComponent ],
-      providers: [Userfacade]
+      providers: [UserFacade]
     })
     .compileComponents();
   }));

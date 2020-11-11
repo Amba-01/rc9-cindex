@@ -6,7 +6,6 @@ import {
   Output,
   ChangeDetectionStrategy,
 } from "@angular/core";
-import { Store, select } from "@ngrx/store";
 import { User } from "../../models/user.model";
 import {
   FormGroup,
@@ -15,15 +14,13 @@ import {
   Validators,
 } from "@angular/forms";
 
-import * as UserState from "../../store/states/user.state";
 import * as UserActions from "../../store/actions/user.actions";
-import * as UserSelectors from "../../store/selectors/user.selectors";
 
 import { SelectItem, Message } from "primeng/api";
 
 import { AppConfigManager } from "../../../../utils/app.config.manager"
 import { Country } from 'src/app/models/country.model';
-import { Userfacade } from '../../facades/user.facade';
+import { UserFacade } from '../../facades/user.facade';
 import { Observable } from 'rxjs';
 @Component({
   selector: "signup",
@@ -51,12 +48,13 @@ export class SignUpComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private appConfigManager: AppConfigManager,
-    private userFacade: Userfacade
+    private userFacade: UserFacade
   ) {
-    this.loading$ = this.userFacade.loading$
   }
 
   ngOnInit(): void {
+    this.loading$ = this.userFacade.isLoading$;
+
     this.userform = this.fb.group({
       firstname: new FormControl("", Validators.required),
       lastname: new FormControl("", Validators.required),
@@ -102,7 +100,7 @@ export class SignUpComponent implements OnInit {
     // console.log(countryMap)
     // console.log(countryMap.get(user.country))
     // user.country = countryMap.get(user.country);
-    this.userFacade.dispatch(UserActions.addUser({ user }))
+    this.userFacade.create( user );
   }
 
   show() {

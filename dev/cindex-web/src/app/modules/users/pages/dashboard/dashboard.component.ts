@@ -5,9 +5,7 @@ import { Country } from 'src/app/models/country.model';
 import { AppConfigManager } from 'src/app/utils/app.config.manager';
 
 import { User } from '../../models/user.model';
-import { Userfacade } from '../../facades/user.facade'
-
-import * as UserActions from "../../store/actions/user.actions";
+import { UserFacade } from '../../facades/user.facade'
 
 @Component({
   selector: 'app-dashboard',
@@ -24,13 +22,13 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private appConfigManager: AppConfigManager,
-    private userFacade: Userfacade
+    private userFacade: UserFacade
   ) {}
 
   ngOnInit() {
     this.users$ = this.userFacade.users$;
 
-    this.userFacade.dispatch(UserActions.loadAll({ offset: 10, limit: 100 }));
+    this.userFacade.loadAll(10, 1);
 
     this.appConfigManager.getCountries().subscribe(
       (data) => (this.countries = data),
@@ -48,11 +46,11 @@ export class DashboardComponent implements OnInit {
       () => console.log("---$$$$$----->1" + JSON.stringify(this.cities))
     );
   }
-  /**
+
   public onUserEmitted(user: User) {
     console.log("From Parent|-------->" + JSON.stringify(user));
     this.selectedUser = user;
-  } */
+  }
 
   public onUserReset(resetUser: boolean) {
     console.log("Reseting user:|-------->" + JSON.stringify(resetUser));

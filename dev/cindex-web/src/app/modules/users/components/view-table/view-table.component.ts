@@ -17,7 +17,7 @@ import {
 } from "@angular/forms";
 import { SelectItem } from "primeng/api/selectitem";
 import { Message } from "primeng/api/message";
-import { Userfacade } from '../../facades/user.facade';
+import { UserFacade } from '../../facades/user.facade';
 
 @Component({
   selector: "view-table",
@@ -48,7 +48,7 @@ export class ViewTableComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private userFacade: Userfacade
+    private userFacade: UserFacade
   ) {}
 
   ngOnInit() {
@@ -146,12 +146,12 @@ export class ViewTableComponent implements OnInit, OnChanges {
 
   updateUser(user: User) {
     console.log("Final:|----->" + JSON.stringify(user));
-    this.userFacade.dispatch(UserActions.update({ user }))
+    this.userFacade.update(user)
     this.display = false;
   }
 
   deleteUser(user: User) {
-    this.userFacade.dispatch(UserActions.remove({ id: user.id }));
+    this.userFacade.remove(user.id);
   }
 
   onCountryChange(event) {

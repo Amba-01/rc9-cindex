@@ -1,28 +1,60 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Store, Action, select } from '@ngrx/store';
-
-import * as UserSelectors from "../store/selectors/user.selectors";
-import * as UserState from "../store/states/user.state";
 import { User } from '../models/user.model';
 
+import * as UserActions from "../store/actions/user.actions";
+import * as UserSelectors from "../store/selectors/user.selectors";
+import * as UserState from "../store/states/user.state";
+
 @Injectable({ providedIn: 'root' })
-export class Userfacade {
+export class UserFacade {
+
+  isLoading$ = this.store.pipe(select(UserSelectors.getLoading));
+  currentUser$ = this.store.pipe(select(UserSelectors.getUser));
+  users$ = this.store.pipe(select(UserSelectors.getUsers));
 
   constructor(
     private store: Store<UserState.State>,
   ){}
 
-  dispatch(action: Action) {
-    this.store.dispatch(action);
+  /**
+   * Create
+   * @param user User
+   */
+  create(user: User): void {
+    this.store.dispatch(UserActions.addUser({ user }));
   }
 
-  get loading$(): Observable<any> {
-    return this.store.pipe(select(UserSelectors.getLoading));
+  /**
+   * Load all
+   * @param offset Offset
+   * @param limit Limit
+   */
+  loadAll(offset?: number, limit?: number): void {
+    this.store.dispatch(UserActions.loadAll({ offset, limit }));
   }
 
-  get users$(): Observable<User[]> {
-    return this.store.pipe(select(UserSelectors.getUsers));
+  /**
+   * Load
+   * @param id ID
+   */
+  load(id: string): void {
+    this.store.dispatch(UserActions.load({ id }));
   }
 
+  /**
+   * Update
+   * @param user User
+   */
+  update(user: User): void {
+    this.store.dispatch(UserActions.update({ user }));
+  }
+
+  /**
+   * Remove
+   * @param id ID
+   */
+  remove(id: string): void {
+    this.store.dispatch(UserActions.remove({ id }));
+  }
 }
