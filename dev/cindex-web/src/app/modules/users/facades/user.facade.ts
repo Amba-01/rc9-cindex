@@ -38,8 +38,16 @@ export class UserFacade {
    * Load
    * @param id ID
    */
-  load(id: string): void {
+  loadById(id: string): void {
     this.store.dispatch(UserActions.load({ id }));
+  }
+
+  /**
+   * Load
+   * @param username Username
+   */
+  loadByUsername(username: string): void {
+
   }
 
   /**

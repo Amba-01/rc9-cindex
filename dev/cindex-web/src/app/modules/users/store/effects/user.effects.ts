@@ -25,7 +25,7 @@ export class UserEffects {
       mergeMap((action) =>
         this.userService.createUser(action.user).pipe(
           map((user) => UserActions.addUserSuccess({ user })),
-          catchError((error) => of(UserActions.addUserFailure({ error })))
+          catchError((error) => of(UserActions.addUserFailure({ error: error.message })))
         )
       )
     )
@@ -40,7 +40,7 @@ export class UserEffects {
       mergeMap((action) =>
         this.userService.updateUser(action.user).pipe(
           map((user) => UserActions.updateSuccess({ user })),
-          catchError((error) => of(UserActions.updateFailure({ error })))
+          catchError((error) => of(UserActions.updateFailure({ error: error.message })))
         )
       )
     )
@@ -54,7 +54,7 @@ export class UserEffects {
       concatMap(({ id }) =>
         this.userService.fetchUser(id).pipe(
           map((user) => UserActions.loadSuccess({ user })),
-          catchError((error) => of(UserActions.loadFailure({ error })))
+          catchError((error) => of(UserActions.loadFailure({ error: error.message })))
         )
       )
     )
@@ -68,7 +68,7 @@ export class UserEffects {
       switchMap(({ offset, limit }) =>
         this.userService.fetchUsers(offset, limit).pipe(
           map((result) => UserActions.loadAllSuccess({ users: result })),
-          catchError((error) => of(UserActions.loadAllFailure({ error })))
+          catchError((error) => of(UserActions.loadAllFailure({ error: error.message })))
         )
       )
     )
@@ -83,7 +83,7 @@ export class UserEffects {
       concatMap((action) =>
         this.userService.deleteUser(action.id).pipe(
           map((result) => UserActions.removeSuccess({ id: result })),
-          catchError((error) => of(UserActions.removeFailure({ error })))
+          catchError((error) => of(UserActions.removeFailure({ error: error.message })))
         )
       )
     )

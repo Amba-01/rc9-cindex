@@ -154,9 +154,13 @@ export class ViewTableComponent implements OnInit, OnChanges {
     this.userFacade.remove(user.id);
   }
 
+  reloadUser(id: string) {
+    this.userFacade.loadById(id);
+  }
+
   onCountryChange(event) {
     //this.table.filter(event.value, 'representative', 'in')
-}
+  }
 
 onActivityChange(event) {}
 

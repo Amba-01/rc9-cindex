@@ -36,7 +36,7 @@ describe('UserFacade', ()=>{
   it('should call load', () => {
     const id = '1';
     const action = UserActions.load({ id });
-    facade.load(id);
+    facade.loadById(id);
     expect(store.dispatch).toHaveBeenCalledWith(action);
   });
 
